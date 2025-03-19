@@ -71,12 +71,20 @@ apiVersion: v1
 kind: Service
 metadata:
   name: grafana
+  annotations:
+    # Force Grafana to use the same IP as Prometheus
+    service.beta.kubernetes.io/azure-load-balancer-ipv4: "128.251.112.160"
+    # Ensure both services can share the same IP
+    service.beta.kubernetes.io/azure-shared-securityrule: "true"
+    # Specify the correct Azure Resource Group
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: "MC_SolaborateRG_SolaborateAKS_northeurope"
 spec:
-  ports:
-    - port: 3000
-      protocol: TCP
-      targetPort: http-grafana
+  type: LoadBalancer
+  loadBalancerIP: 128.251.112.160  # Explicitly assign same IP
   selector:
     app: grafana
-  sessionAffinity: None
-  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: http-grafana
+      protocol: TCP
+      name: web-grafana
