@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: "MC_SolaborateRG_SolaborateAKS_northeurope"
+    service.beta.kubernetes.io/azure-load-balancer-ipv4: "128.251.112.160"
+    service.beta.kubernetes.io/azure-shared-securityrule: "true"
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 128.251.112.160
+  selector:
+    app: prometheus
+  ports:
+    - port: 9090
+      targetPort: http-prometheus
+      protocol: TCP
+      name: web-prometheus
