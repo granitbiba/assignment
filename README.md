@@ -8,7 +8,7 @@
 - The image was built and pushed to Docker Hub.
 - Commands used:
 ```
-docker build -t webapp .
+docker build -t flask-app .
 docker tag flask-app grannitb/flask-app
 docker push grannitb/flask-app
 ```
