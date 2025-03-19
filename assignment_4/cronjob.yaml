@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: print-time
+spec:
+  schedule: "0 * * * *" # Run every hour
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: print-time
+            image: busybox
+            command:
+            - /bin/sh
+            - -c
+            - "date; echo 'Running this CronJob every hour!'"
+          restartPolicy: OnFailure
